@@ -1,0 +1,61 @@
+/* Em style.qss */
+
+/* Define a aparência geral da janela */
+QMainWindow {
+    background-color: #2E2E2E; /* Fundo cinza escuro */
+}
+
+/* Estilo para todos os rótulos (Labels) */
+QLabel {
+    color: #FFFFFF; /* Texto branco */
+    font-size: 14px;
+}
+
+/* Estilo para todos os campos de texto (Line Edits) */
+QLineEdit {
+    background-color: #555555; /* Fundo do campo cinza médio */
+    color: #FFFFFF; /* Texto digitado branco */
+    border: 1px solid #777777;
+    border-radius: 5px; /* Bordas arredondadas */
+    padding: 8px; /* Espaçamento interno */
+    font-size: 14px;
+}
+/* Efeito ao passar o mouse ou focar no campo */
+QLineEdit:focus {
+    border: 1px solid #E6007A; /* Borda rosa (exemplo) */
+}
+
+/* Estilo para todas as Listas */
+QListWidget {
+    background-color: #404040;
+    color: #FFFFFF;
+    border: 1px solid #777777;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Estilo para os itens da lista ao serem selecionados */
+QListWidget::item:selected {
+    background-color: #E6007A; /* Fundo rosa ao selecionar */
+    color: #FFFFFF;
+}
+
+/* Estilo para todos os botões (Push Buttons) */
+QPushButton {
+    background-color: #E6007A; /* Cor principal rosa */
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 10px; /* Aumenta o tamanho do botão */
+    font-size: 14px;
+}
+/* Efeito ao pressionar o botão */
+QPushButton:pressed {
+    background-color: #C00065; /* Rosa um pouco mais escuro */
+}
+
+QMessageBox QLabel {
+    color: #000000; /* Define o texto do popup como PRETO */
+    font-size: 14px;
+}
