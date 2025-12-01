@@ -21,4 +21,4 @@ O sistema funciona em arquitetura Cliente-Servidor:
 ### Instalação
 1. Clone o repositório:
    ```bash
-   git clone [https://github.com/isabelladosanjos/BelleTime_Agenda.git]
+   git clone https://github.com/isabelladosanjos/BelleTime_Agenda.git

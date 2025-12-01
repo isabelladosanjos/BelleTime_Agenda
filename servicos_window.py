@@ -1,4 +1,4 @@
-# servicos_window.py (Versão sem ID visível)
+# servicos_window.py 
 import sys
 from PySide6.QtWidgets import QMainWindow, QMessageBox, QListWidgetItem 
 from PySide6.QtCore import Qt 
