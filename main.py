@@ -1,6 +1,6 @@
-# main.py (Versão Finalíssima - Corrigida para .exe)
+# main.py 
 import sys
-import os # <--- NOVO IMPORT NECESSÁRIO
+import os 
 from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox
 
 # Importa as telas
@@ -12,7 +12,6 @@ from login_window import LoginWindow
 
 import database
 
-# --- FUNÇÃO MÁGICA PARA O .EXE ACHAR OS ARQUIVOS ---
 def resource_path(relative_path):
     """Retorna o caminho absoluto, funcione em dev ou como .exe"""
     try:
@@ -22,7 +21,6 @@ def resource_path(relative_path):
         base_path = os.path.abspath(".")
 
     return os.path.join(base_path, relative_path)
-# ---------------------------------------------------
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
