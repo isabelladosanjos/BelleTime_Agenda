@@ -4,7 +4,7 @@ from mysql.connector import Error
 
 # --- 1. CONFIGURAÇÃO DA CONEXÃO ---
 CONFIG = {
-    'host': '192.168.15.10',  # <--- CONFIRA SE O IP DA VM É ESSE MESMO (ip a)
+    'host': '192.168.15.11',  # <--- CONFIRA SE O IP DA VM É ESSE MESMO (ip a)
     'user': 'isabella',
     'password': '745181',
     'database': 'belletime_agendadb'

@@ -1,10 +1,12 @@
-# main.py 
+# main.py
 import sys
-import os 
+import os
 from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox
 
-# Importa as telas
-from ui_janela_cliente import Ui_MainWindow
+# Importa o design da pasta 'views'
+from views.ui_janela_cliente import Ui_MainWindow 
+
+# Importa as outras janelas (controladores)
 from agenda_window import AgendaWindow
 from mensal_window import MensalWindow
 from servicos_window import ServicosWindow
@@ -12,14 +14,12 @@ from login_window import LoginWindow
 
 import database
 
+# --- FUNÇÃO PARA LOCALIZAR ARQUIVOS (No .exe ou no VS Code) ---
 def resource_path(relative_path):
-    """Retorna o caminho absoluto, funcione em dev ou como .exe"""
     try:
-        # PyInstaller cria uma pasta temporária e armazena o caminho em _MEIPASS
         base_path = sys._MEIPASS
     except Exception:
         base_path = os.path.abspath(".")
-
     return os.path.join(base_path, relative_path)
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -39,7 +39,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.botao_excluir.clicked.connect(self.deletar_cliente_selecionado)
         self.lista_clientes_widget.currentItemChanged.connect(self.ao_clicar_na_lista)
         
-        # Botões de navegação
         try: self.botao_novo_agendamento.clicked.connect(self.abrir_janela_agenda)
         except AttributeError: pass
         try: self.botao_ver_mensal.clicked.connect(self.abrir_mensal)
@@ -57,7 +56,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         lista = database.listar_clientes()
         if lista is None: lista = []
         for c in lista:
-            self.lista_clientes_widget.addItem(f"ID: {c['id']} | Nome: {c['nome']}")
+            # Lista Limpa (usando QListWidgetItem se quiser, ou texto simples aqui)
+            from PySide6.QtWidgets import QListWidgetItem
+            from PySide6.QtCore import Qt
+            
+            texto = f"{c['nome']} - {c['telefone']}"
+            item = QListWidgetItem(texto)
+            item.setData(Qt.UserRole, c['id'])
+            self.lista_clientes_widget.addItem(item)
             
     def salvar_novo_cliente(self):
         nome = self.campo_nome.text()
@@ -77,7 +83,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def ao_clicar_na_lista(self, item):
         if not item: return
         try:
-            self.cliente_id_selecionado = int(item.text().split(" | ")[0].split(": ")[1])
+            from PySide6.QtCore import Qt
+            self.cliente_id_selecionado = item.data(Qt.UserRole)
             cliente = database.buscar_cliente_por_id(self.cliente_id_selecionado)
             if cliente:
                 self.campo_nome.setText(cliente['nome'])
@@ -136,24 +143,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.janela_servicos.show()
         self.janela_servicos.activateWindow()
 
-# --- BLOCO PRINCIPAL ATUALIZADO ---
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     
-    # Carrega estilo usando a função resource_path
+    # --- CAMINHO CORRIGIDO PARA A PASTA ASSETS ---
     try:
-        # AQUI ESTÁ A CORREÇÃO: Usamos resource_path para achar o arquivo dentro do EXE
-        with open(resource_path("style.qss"), "r") as f:
-            style = f.read()
-            app.setStyleSheet(style)
+        style_path = resource_path("assets/style.qss")
+        with open(style_path, "r") as f:
+            app.setStyleSheet(f.read())
     except FileNotFoundError: pass
 
-    # 1. Abre Login
+    # Abre Login
     login = LoginWindow()
     login.show()
     app.exec() 
     
-    # 2. Se logou, abre Main
     if login.login_sucesso:
         window = MainWindow()
         window.show()
